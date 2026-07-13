@@ -6,6 +6,7 @@ public class MainMenu : MonoBehaviour
     public GameObject kills;
     public GameObject ammo;
     public GameObject health;
+    public GameObject highscore;
     public AudioSource startmenutheme;
     public AudioSource bgm;
 
@@ -15,6 +16,7 @@ public class MainMenu : MonoBehaviour
         kills.SetActive(false);
         ammo.SetActive(false);
         health.SetActive(false);
+
         // 1. Ensure time is paused so zombies don't move/spawn behind the menu
         Time.timeScale = 0f;
 

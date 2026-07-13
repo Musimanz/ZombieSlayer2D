@@ -10,6 +10,7 @@ TagManager:
   - Zombie
   - ZombieSpawner
   - Ground
+  - Danger
   layers:
   - Default
   - TransparentFX
@@ -19,8 +20,8 @@ TagManager:
   - UI
   - Bullet
   - Player
-  - 
-  - 
+  - Camer Confiner
+  - Walls
   - 
   - 
   - 

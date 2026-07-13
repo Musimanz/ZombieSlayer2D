@@ -4,7 +4,7 @@ using UnityEngine;
 public class Shooter : MonoBehaviour
 {
     public Rigidbody2D myRigidBody;
-    private float playerHealth = 100;
+    public float playerHealth = 100;
     private float moveSpeed = 10;
     public bool isRight = true;
     private bool lastPos;
@@ -16,6 +16,22 @@ public class Shooter : MonoBehaviour
     private bool inAir = false;
     [SerializeField] private AudioClip zombieBiteSFX;
     [SerializeField] private AudioClip playerDeathSFX;
+
+    public static Shooter Instance { get; private set; }
+
+    void Awake()
+    {
+        // Set the reference when the game starts
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject); // Prevent duplicates
+        }
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

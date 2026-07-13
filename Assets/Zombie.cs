@@ -9,6 +9,7 @@ public class Zombie : MonoBehaviour
     public LogicScript logic;
     public ZombieSpawner zSpawner;
     public Rigidbody2D rb;
+    public Shooter myShooter;
     private float timer;
     private AudioSource currentZombieSound;
     [SerializeField] private AudioClip[] zombieSFX;
@@ -29,6 +30,8 @@ public class Zombie : MonoBehaviour
         logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
 
         zSpawner = GameObject.FindGameObjectWithTag("ZombieSpawner").GetComponent<ZombieSpawner>();
+
+        myShooter = GameObject.FindGameObjectWithTag("Player").GetComponent<Shooter>();
 
         //Get player object for the target object of movetowards script
         GameObject player = GameObject.FindWithTag("Player");
@@ -98,6 +101,16 @@ public class Zombie : MonoBehaviour
         {
             Destroy(gameObject, 2f);
             logic.addKills(1);
+
+            //heal player on kills
+
+            if (myShooter.playerHealth < 100) 
+            { 
+            int healNo = UnityEngine.Random.Range(1, 4) * 5;
+            myShooter.playerHealth = myShooter.playerHealth + healNo > 100 ? 100 : myShooter.playerHealth + healNo;
+            logic.Heal(healNo);
+            }
+
             Debug.Log("Zombie Destroyed");
         }
     }

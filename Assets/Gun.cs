@@ -18,9 +18,9 @@ public class Gun : MonoBehaviour
 
     private float fireDelay = 0.5f;
 
-    private int totalAmmo = 6;
+    private int totalAmmo = 7;
 
-    private int currentAmmo = 6;
+    private int currentAmmo = 7;
 
     private bool isReloading = false;
 
@@ -33,6 +33,8 @@ public class Gun : MonoBehaviour
     [SerializeField] private AudioClip[] gunShootSFX;
 
     [SerializeField] private AudioClip[] reloadSFX;
+
+    [SerializeField] private AudioClip gunEmptySFX;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -55,7 +57,7 @@ public class Gun : MonoBehaviour
             gunShootSpeed = gunShootSpeed * -1;
         }
 
-        if((currentAmmo < 1 || Input.GetKeyDown(KeyCode.R)) && !isReloading)
+        if(Input.GetKeyDown(KeyCode.R) && !isReloading)
         {
             StartCoroutine(ReloadRoutine());
         }
@@ -70,6 +72,13 @@ public class Gun : MonoBehaviour
             SoundFXManager.instance.PlayRandSoundFXClip(gunShootSFX, transform, 0.2f);
             timer = 0;
         }
+
+        else if (Input.GetKeyDown(KeyCode.Space) && timer >= fireDelay && currentAmmo < 1 && !isReloading)
+        {
+            SoundFXManager.instance.PlaySoundFXClip(gunEmptySFX, transform, 0.2f);
+            timer = 0;
+        }
+
         else
         {
             timer += Time.deltaTime;
@@ -110,7 +119,7 @@ public class Gun : MonoBehaviour
         yield return new WaitForSeconds(totalWaitTime);
 
         // 4. This code ONLY runs AFTER the wait time is complete!
-        currentAmmo = 6;
+        currentAmmo = 7;
         logic.updateAmmo(totalAmmo, currentAmmo);
 
         isReloading = false; // Unlock reload
